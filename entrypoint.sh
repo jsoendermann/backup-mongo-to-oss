@@ -26,8 +26,7 @@ done
 export MONGO_PORT=${MONGO_PORT:-27017}
 export MONGO_AUTH_DB=${MONGO_AUTH_DB:-admin}
 export FILENAME_PREFIX=${FILENAME_PREFIX:-backup}
-# CRON_SCHEDULE=${CRON_SCHEDULE:-10 4 * * 1,4}
-export CRON_SCHEDULE=${CRON_SCHEDULE:-*/1 * * * *}
+CRON_SCHEDULE=${CRON_SCHEDULE:-10 4 * * 1,4}
 
 echo -e "\
 $(env)\n\
@@ -35,3 +34,9 @@ $CRON_SCHEDULE /scripts/backup.sh >> /var/log/cron.log 2>&1\
 " | crontab -
 
 echo "Done installing crontab"
+
+
+cron
+
+touch /var/log/cron.log
+tail -f /var/log/cron.log
