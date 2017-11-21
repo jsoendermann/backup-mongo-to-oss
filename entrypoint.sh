@@ -15,7 +15,7 @@ REQUIRED_ENV_VARS=(
     OSS_BUCKET_NAME
 )
 
-# Making sure all required env vars are there
+# Make sure all required env vars are there
 for var in "${REQUIRED_ENV_VARS[@]}" ; do
     if [[ -z "${!var}" ]] ; then
         echo "$var is not set"
@@ -23,11 +23,14 @@ for var in "${REQUIRED_ENV_VARS[@]}" ; do
     fi
 done
 
+# Set default values for non-required vars
 export MONGO_PORT=${MONGO_PORT:-27017}
 export MONGO_AUTH_DB=${MONGO_AUTH_DB:-admin}
 export FILENAME_PREFIX=${FILENAME_PREFIX:-backup}
+# Default is "At 04:10 on Monday and Thursday."
 CRON_SCHEDULE=${CRON_SCHEDULE:-10 4 * * 1,4}
 
+# Write crontab
 echo -e "\
 $(env)\n\
 $CRON_SCHEDULE /scripts/backup.sh >> /var/log/cron.log 2>&1\
@@ -35,8 +38,11 @@ $CRON_SCHEDULE /scripts/backup.sh >> /var/log/cron.log 2>&1\
 
 echo "Done installing crontab"
 
-
+# Start cron
 cron
 
+# We have to touch this file to make sure it exists when we run tail
 touch /var/log/cron.log
+
+# This is to prevent our container from exiting
 tail -f /var/log/cron.log

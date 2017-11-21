@@ -10,7 +10,6 @@ DATE=$(date -u "+%F-%H%M%S")
 BACKUP_NAME="${FILENAME_PREFIX}-$DATE"
 ARCHIVE_NAME="$BACKUP_NAME.tar.bz2"
 ARCHIVE_FILE="$BACKUP_DIR/$ARCHIVE_NAME"
-echo "Backup dir: $BACKUP_DIR; BACKUP_NAME: $BACKUP_NAME; ARCHIVE_NAME: $ARCHIVE_NAME"
 
 echo "===================> Locking db <==================="
 mongo \
@@ -62,6 +61,6 @@ echo "===================> Upload complete <==================="
 echo "===================> Clearing temp files <==================="
 rm -rf "$BACKUP_DIR/*"
 
-# TODO webhook
+# TODO(jan): Webhook
 
 echo "===================> Done! <==================="
