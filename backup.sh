@@ -4,8 +4,6 @@ set -e
 
 echo "===================> Starting backup at $(date)... <==================="
 
-env
-
 # Files & dirs
 BACKUP_DIR="/tmp-dir"
 DATE=$(date -u "+%F-%H%M%S")
