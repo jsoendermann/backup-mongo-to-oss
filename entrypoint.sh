@@ -5,6 +5,7 @@ set -e
 echo "Installing crontab..."
 
 REQUIRED_ENV_VARS=(
+    CRON_SCHEDULE
     MONGO_HOST
     MONGO_USERNAME
     MONGO_PASSWORD
@@ -27,8 +28,6 @@ done
 export MONGO_PORT=${MONGO_PORT:-27017}
 export MONGO_AUTH_DB=${MONGO_AUTH_DB:-admin}
 export FILENAME_PREFIX=${FILENAME_PREFIX:-backup}
-# Default is "At 04:10 on Monday and Thursday."
-CRON_SCHEDULE=${CRON_SCHEDULE:-10 4 * * 1,4}
 
 # Write crontab
 echo -e "\
