@@ -7,8 +7,8 @@ RUN apt-get update && \
 
 WORKDIR /scripts
 
-
-ADD ./scripts/* ./
+ADD backup.sh .
+ADD entrypoint.sh .
 RUN chmod +x ./*
 
 VOLUME /tmp-dir
