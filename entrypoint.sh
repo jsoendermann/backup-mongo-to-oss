@@ -3,6 +3,7 @@
 set -e
 
 echo "Installing crontab..."
+echo "Schedule: ${CRON_SCHEDULE}"
 
 REQUIRED_ENV_VARS=(
     CRON_SCHEDULE
