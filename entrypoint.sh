@@ -2,6 +2,8 @@
 
 set -e
 
+echo "Backup script version 1"
+
 echo "Installing crontab..."
 echo "Schedule: ${CRON_SCHEDULE}"
 
