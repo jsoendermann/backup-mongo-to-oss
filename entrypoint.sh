@@ -15,6 +15,7 @@ REQUIRED_ENV_VARS=(
     OSS_ACCESS_KEY_SECRET
     OSS_REGION
     OSS_BUCKET_NAME
+    ENCRYPTION_KEY
 )
 
 # Make sure all required env vars are there
@@ -40,6 +41,9 @@ echo "Done installing crontab"
 
 # Start cron
 cron
+
+# Run the backup once now
+/scripts/backup.sh
 
 # We have to touch this file to make sure it exists when we run tail
 touch /var/log/cron.log
