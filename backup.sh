@@ -10,8 +10,9 @@ echo "===================> Starting backup at $(date)..."
   DATE=$(date -u "+%F-%H%M%S")
   BACKUP_NAME="${FILENAME_PREFIX}-$DATE"
   ARCHIVE_NAME="$BACKUP_NAME.tar.bz2"
+  ARCHIVE_NAME_ENC="$ARCHIVE_NAME.enc"
   ARCHIVE_FILE="$BACKUP_DIR/$ARCHIVE_NAME"
-  ARCHIVE_FILE_ENC="$BACKUP_DIR/$ARCHIVE_NAME.enc"
+  ARCHIVE_FILE_ENC="$BACKUP_DIR/$ARCHIVE_NAME_ENC"
 
   echo "===================> Locking db"
   mongo \
@@ -53,7 +54,7 @@ echo "===================> Starting backup at $(date)..."
   DATE_VALUE="`TZ=GMT date +'%a, %d %b %Y %H:%M:%S GMT'`"
   STRING_TO_SIGN="PUT\n${CONTENT_MD5}\n${CONTENT_TYPE}\n${DATE_VALUE}\n${RESOURCE}"
   SIGNATURE=$(echo -e -n $STRING_TO_SIGN | openssl dgst -sha1 -binary -hmac $OSS_ACCESS_KEY_SECRET | openssl enc -base64)
-  URL="http://${OSS_BUCKET_NAME}.${OSS_REGION}.aliyuncs.com/${ARCHIVE_NAME}"
+  URL="http://${OSS_BUCKET_NAME}.${OSS_REGION}.aliyuncs.com/${ARCHIVE_NAME_ENC}"
   curl -i -q -X PUT -T "${ARCHIVE_FILE_ENC}" \
     -H "Host: ${OSS_BUCKET_NAME}.${OSS_REGION}.aliyuncs.com" \
     -H "Date: ${DATE_VALUE}" \
