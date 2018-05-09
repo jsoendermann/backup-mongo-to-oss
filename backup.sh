@@ -48,7 +48,7 @@ echo "===================> Starting backup at $(date)..."
   openssl aes-256-cbc -in "$ARCHIVE_FILE" -k "$ENCRYPTION_KEY" -out "$ARCHIVE_FILE_ENC"
 
   echo "===================> Uploading..."
-  RESOURCE="/${OSS_BUCKET_NAME}/${ARCHIVE_NAME}"
+  RESOURCE="/${OSS_BUCKET_NAME}/${ARCHIVE_NAME_ENC}"
   CONTENT_MD5=$(openssl dgst -md5 -binary "${ARCHIVE_FILE_ENC}" | openssl enc -base64)
   CONTENT_TYPE=$(file -ib "${ARCHIVE_FILE_ENC}" |awk -F ";" '{print $1}')
   DATE_VALUE="`TZ=GMT date +'%a, %d %b %Y %H:%M:%S GMT'`"
